@@ -14,16 +14,19 @@ public class Main {
 
         List<Double> inputData = new ArrayList<>();
         inputData.add(35.5);
-        inputData.add(12.4999);
+        inputData.add(12.40);
         inputData.add(90.32);
         inputData.add(20.32);
 
-        Logger.getLogger("org.apache").setLevel(Level.WARNING);
+        Logger.getLogger("org.apache").setLevel(Level.OFF);
 
         SparkConf conf = new SparkConf().setAppName("startingSpark").setMaster("local[*]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaRDD<Double> myRdd = sc.parallelize(inputData);
+
+        Double result = myRdd.reduce((value1, value2) -> value1 + value2);
+        System.out.println(result);
 
         sc.close();
 
